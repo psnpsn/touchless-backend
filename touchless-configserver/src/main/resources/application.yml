@@ -1,0 +1,8 @@
+spring:
+    cloud:
+        config:
+            server:
+                git:
+                    uri: https://github.com/psnpsn/
+                    search-paths: config-properties
+                    clone-on-start: true
