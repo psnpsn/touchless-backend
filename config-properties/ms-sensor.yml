@@ -1,0 +1,9 @@
+spring:
+    data:
+        mongodb:
+            host: localhost
+            port: 27017
+            database: sensorManagement
+            username: iosys
+            password: iosys
+            authentication-database: sensorManagement

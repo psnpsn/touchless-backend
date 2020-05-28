@@ -3,6 +3,6 @@ spring:
         config:
             server:
                 git:
-                    uri: https://github.com/psnpsn/
+                    uri: https://github.com/psnpsn/touchless-backend/
                     search-paths: config-properties
                     clone-on-start: true
