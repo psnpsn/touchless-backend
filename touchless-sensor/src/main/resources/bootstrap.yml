@@ -1,0 +1,10 @@
+server:
+    port: 8085
+spring:
+    application:
+        name: ms-sensor
+    cloud:
+        config:
+            discovery:
+                enabled: true
+                service-id: ms-config-server

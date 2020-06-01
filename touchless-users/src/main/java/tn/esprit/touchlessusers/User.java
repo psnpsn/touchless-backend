@@ -18,6 +18,7 @@ public class User {
 
     @Id
     private String id;
+    private String role;
     private String username;
     private String email;
     private String firstname;
@@ -30,8 +31,9 @@ public class User {
     public User() {
     }
 
-    public User(String id, String username, String email, String firstname, String lastname, String telephone, String address, String lastLogin, String creationDate) {
+    public User(String id, String role, String username, String email, String firstname, String lastname, String telephone, String address, String lastLogin, String creationDate) {
         this.id = id;
+        this.role = role;
         this.username = username;
         this.email = email;
         this.firstname = firstname;
@@ -113,7 +115,14 @@ public class User {
     public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
-    
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     
 
 }

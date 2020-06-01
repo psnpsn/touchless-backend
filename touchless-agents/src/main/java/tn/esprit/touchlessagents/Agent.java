@@ -22,11 +22,12 @@ public class Agent {
     private String telephone;
     private String email;
     private String wristbandId;
+    private String siteId;
 
     public Agent() {
     }
 
-    public Agent(String id, String status, String lastname, String firstname, String telephone, String email, String wristbandId) {
+    public Agent(String id, String status, String lastname, String firstname, String telephone, String email, String wristbandId, String siteId) {
         this.id = id;
         this.status = status;
         this.lastname = lastname;
@@ -34,6 +35,7 @@ public class Agent {
         this.telephone = telephone;
         this.email = email;
         this.wristbandId = wristbandId;
+        this.siteId = siteId;
     }
 
     public String getId() {
@@ -91,6 +93,16 @@ public class Agent {
     public void setWristbandId(String wristbandId) {
         this.wristbandId = wristbandId;
     }
+
+    public String getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(String siteId) {
+        this.siteId = siteId;
+    }
+    
+    
     
     
 }
