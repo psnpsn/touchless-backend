@@ -1,0 +1,9 @@
+zuul:
+    routes:
+        ms-user: /api/user/**
+        ms-agent: /api/agent/**
+        ms-gateway: /api/gateway/**
+        ms-tapwater: /api/tapwater/**
+        ms-sensor: /api/sensor/**
+        ms-wristband: /api/wristband/**
+        ms-site: /api/site/**
