@@ -1,9 +1,9 @@
 spring:
-    data:
-        mongodb:
-            host: localhost
-            port: 27017
-            database: userManagement
-            username: iosys
-            password: iosys
-            authentication-database: userManagement
+    datasource:
+        url: jdbc:h2:mem:authdb
+        driverClassName: org.h2.Driver
+        username: iosys
+        password: iosys
+    h2:
+        console:
+            enabled: true
