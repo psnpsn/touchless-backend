@@ -8,7 +8,7 @@
  * Created: Jun 7, 2020
  */
 
-INSERT INTO oauth_client_details (client_id, client_secret, web_server_redirect_uri, scope, access_token_validity, refresh_token_validity, resource_ids, authorized_grant_types, additional_information) VALUES ('angular-app', '{bcrypt}$2y$10$WHwL4jd5hHdb/jgAxPbR2e7Q9fN9xOy6ydREoKaZrXclZPfaJrcmW', 'http://localhost:8080/code', 'READ,WRITE', '3600', '10000', 'inventory,payment', 'authorization_code,password,refresh_token,implicit', '{}');
+INSERT INTO oauth_client_details (client_id, client_secret, web_server_redirect_uri, scope, access_token_validity, refresh_token_validity, resource_ids, authorized_grant_types, additional_information) VALUES ('angular-app', '{bcrypt}$2y$10$6091leLVF7JabIu6zJ4dze5bXOh9QLAdvNYYdkS6kXNx1a87uInLC', 'http://localhost:8080/code', 'all', '3600', '10000', 'inventory,payment', 'authorization_code,password,refresh_token,implicit', '{}');
 
  INSERT INTO PERMISSION (NAME) VALUES
  ('create_profile'),
@@ -26,7 +26,7 @@ INSERT INTO oauth_client_details (client_id, client_secret, web_server_redirect_
      (4,1), /* delete admin */
      (2,2),  /* read operator */
      (3,2);  /* update operator */
-insert into user (id, username,password, email, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked) VALUES ('1', 'iosys','{bcrypt}$2y$10$WHwL4jd5hHdb/jgAxPbR2e7Q9fN9xOy6ydREoKaZrXclZPfaJrcmW', 'iosys@iosys.com', '1', '1', '1', '1');
+insert into user (id, username,password, email, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked) VALUES ('1', 'iosys','{bcrypt}$2y$10$6091leLVF7JabIu6zJ4dze5bXOh9QLAdvNYYdkS6kXNx1a87uInLC', 'iosys@iosys.com', '1', '1', '1', '1');
 insert into  user (id, username,password, email, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked) VALUES ('2', 'psn', '{bcrypt}$2y$10$3EWeT4WAkkQXQYltBJToxOxN9fU7mndj5hYNsVsJbYTVwyjwvyF8C','psn@psn.com', '1', '1', '1', '1');
 
 INSERT INTO ROLE_USER (ROLE_ID, USER_ID)
