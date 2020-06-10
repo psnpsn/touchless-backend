@@ -1,0 +1,11 @@
+server:
+    port: 8091
+spring:
+    application:
+        name: ms-tapread
+    cloud:
+        config:
+            discovery:
+                enabled: true
+                service-id: ms-config-server
+        uri: http://localhost:8888        

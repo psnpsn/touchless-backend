@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.touchlessagents;
+package tn.esprit.touchlesstapread;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,14 +22,14 @@ import reactor.core.publisher.Mono;
  * @author psn
  */
 @RestController
-@RequestMapping("agent")
-public class AgentController {
+@RequestMapping("tapread")
+public class TapreadController {
     
     @Autowired
-    private AgentService service;
+    private TapreadService service;
     
     @GetMapping
-    public Flux<Agent> getAll() {
+    public Flux<Tapread> getAll() {
         return service.getAll();
     }
     
@@ -38,16 +38,16 @@ public class AgentController {
 	return service.getById(id);
     }
     @PutMapping("{id}")
-    public Mono updateById(@RequestBody final Agent agent) {
-	return service.update(agent);
+    public Mono updateById(@RequestBody final Tapread tapread) {
+	return service.update(tapread);
     }
     @PostMapping
-    public Mono save(@RequestBody final Agent agent) {
-        System.out.println("Agent: " + agent.toString());
-	return service.save(agent);
+    public Mono save(@RequestBody final Tapread tapread) {
+	return service.save(tapread);
     }
     @DeleteMapping("{id}")
     public Mono delete(@PathVariable final String id) {
 	return service.delete(id);
     }
+    
 }

@@ -28,6 +28,7 @@ public class UserController {
     @Autowired
     private UserService service;
     
+    @GetMapping
     public Flux<User> getAll() {
         return service.getAll();
     }

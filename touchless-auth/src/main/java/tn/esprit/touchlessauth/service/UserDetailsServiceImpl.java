@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import tn.esprit.touchlessauth.domain.AuthUserDetails;
 import tn.esprit.touchlessauth.domain.User;
 import tn.esprit.touchlessauth.repository.UserDetailsRepository;
 
@@ -30,11 +29,11 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         
         Optional<User> optionalUser = userDetailsRepository.findByUsername(username);
-        optionalUser.orElseThrow(() -> new UsernameNotFoundException("Username or password wrong"));
-
-        UserDetails userDetails = new AuthUserDetails(optionalUser.get());
-        new AccountStatusUserDetailsChecker().check(userDetails);
-        return userDetails;
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else {
+            throw new UsernameNotFoundException(String.format("Username! : %s not found", username));
+        }
     }
     
 }

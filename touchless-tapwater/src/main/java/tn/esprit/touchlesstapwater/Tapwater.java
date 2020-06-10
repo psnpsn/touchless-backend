@@ -19,6 +19,7 @@ public class Tapwater {
     @Id
     private String id;
     
+    private String ipA;
     private String gatewayId;
     private String status;
     private String boardModel;
@@ -29,8 +30,9 @@ public class Tapwater {
     public Tapwater() {
     }
 
-    public Tapwater(String id, String gatewayId, String status, String boardModel, String tapModel, String currentVersion, String installDate) {
+    public Tapwater(String id, String ipA, String gatewayId, String status, String boardModel, String tapModel, String currentVersion, String installDate) {
         this.id = id;
+        this.ipA = ipA;
         this.gatewayId = gatewayId;
         this.status = status;
         this.boardModel = boardModel;
@@ -46,6 +48,16 @@ public class Tapwater {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getIpA() {
+        return ipA;
+    }
+
+    public void setIpA(String ipA) {
+        this.ipA = ipA;
+    }
+    
+    
 
     public String getGatewayId() {
         return gatewayId;

@@ -24,6 +24,10 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
  
 import javax.sql.DataSource;
 import java.security.KeyPair;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ClassPathResource;
 
 /**
  *
@@ -31,81 +35,58 @@ import java.security.KeyPair;
  */
 @Configuration
 @EnableAuthorizationServer
-@EnableConfigurationProperties(SecurityProperties.class)
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
  
-    private final DataSource dataSource;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final SecurityProperties securityProperties;
+    @Autowired
+    @Qualifier("dataSource")
+    private DataSource dataSource;
  
-    private JwtAccessTokenConverter jwtAccessTokenConverter;
-    private TokenStore tokenStore;
+    @Autowired
+    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager;
  
-    public AuthorizationConfig(final DataSource dataSource, final PasswordEncoder passwordEncoder,
-                                            final AuthenticationManager authenticationManager, final SecurityProperties securityProperties) {
-        this.dataSource = dataSource;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.securityProperties = securityProperties;
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.tokenKeyAccess("isAnonymous()");
+    }
+    
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints
+                .authenticationManager(this.authenticationManager)
+                .tokenServices(tokenServices())
+                .tokenStore(tokenStore())
+                .accessTokenConverter(accessTokenConverter());
+    }
+ 
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients.jdbc(dataSource);
     }
  
     @Bean
     public TokenStore tokenStore() {
-        if (tokenStore == null) {
-            tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
-        }
-        return tokenStore;
+        return new JwtTokenStore(accessTokenConverter());
     }
  
     @Bean
-    public DefaultTokenServices tokenServices(final TokenStore tokenStore,
-                                              final ClientDetailsService clientDetailsService) {
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setSupportRefreshToken(true);
-        tokenServices.setTokenStore(tokenStore);
-        tokenServices.setClientDetailsService(clientDetailsService);
-        tokenServices.setAuthenticationManager(this.authenticationManager);
-        return tokenServices;
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        KeyStoreKeyFactory keyStoreKeyFactory =
+                new KeyStoreKeyFactory(
+                        new ClassPathResource("ms-auth.jks"),
+                        "ms-auth-pass".toCharArray());
+        converter.setKeyPair(keyStoreKeyFactory.getKeyPair("ms-auth"));
+        return converter;
     }
  
     @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        if (jwtAccessTokenConverter != null) {
-            return jwtAccessTokenConverter;
-        }
- 
-        SecurityProperties.JwtProperties jwtProperties = securityProperties.getJwt();
-        KeyPair keyPair = keyPair(jwtProperties, keyStoreKeyFactory(jwtProperties));
- 
-        jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setKeyPair(keyPair);
-        return jwtAccessTokenConverter;
-    }
- 
-    @Override
-    public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(this.dataSource).passwordEncoder(passwordEncoder);
-    }
- 
-    @Override
-    public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.authenticationManager(this.authenticationManager)
-                .accessTokenConverter(jwtAccessTokenConverter())
-                .tokenStore(tokenStore());
-    }
- 
-    @Override
-    public void configure(final AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.passwordEncoder(this.passwordEncoder).tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()");
-    }
- 
-    private KeyPair keyPair(SecurityProperties.JwtProperties jwtProperties, KeyStoreKeyFactory keyStoreKeyFactory) {
-        return keyStoreKeyFactory.getKeyPair(jwtProperties.getKeyPairAlias(), jwtProperties.getKeyPairPassword().toCharArray());
-    }
- 
-    private KeyStoreKeyFactory keyStoreKeyFactory(SecurityProperties.JwtProperties jwtProperties) {
-        return new KeyStoreKeyFactory(jwtProperties.getKeyStore(), jwtProperties.getKeyStorePassword().toCharArray());
+    @Primary
+    public DefaultTokenServices tokenServices() {
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(tokenStore());
+        defaultTokenServices.setSupportRefreshToken(true);
+        defaultTokenServices.setTokenEnhancer(accessTokenConverter());
+        return defaultTokenServices;
     }
 }

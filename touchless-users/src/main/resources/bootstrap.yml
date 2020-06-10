@@ -8,4 +8,9 @@ spring:
             discovery:
                 enabled: true
                 service-id: ms-config-server
-        uri: http://localhost:8888        
+        uri: http://localhost:8888  
+    security:  
+        oauth2:  
+            resourceserver:  
+                jwt:  
+                    jwk-set-uri: http://localhost:8090/oauth/token_key

@@ -7,3 +7,5 @@ zuul:
         ms-sensor: /api/sensor/**
         ms-wristband: /api/wristband/**
         ms-site: /api/site/**
+	ms-tapread: /api/tapread/**
+	ms-compliance: /api/compliance/**

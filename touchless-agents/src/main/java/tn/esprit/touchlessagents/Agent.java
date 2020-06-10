@@ -101,8 +101,11 @@ public class Agent {
     public void setSiteId(String siteId) {
         this.siteId = siteId;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Agent{" + "id=" + id + ", status=" + status + ", lastname=" + lastname + ", firstname=" + firstname + ", telephone=" + telephone + ", email=" + email + ", wristbandId=" + wristbandId + ", siteId=" + siteId + '}';
+    }
     
     
 }
