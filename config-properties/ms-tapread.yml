@@ -8,9 +8,9 @@ spring:
             password: iosys
             authentication-database: tapreadManagement
     kafka:
-	bootstrap-servers: localhost:9092
-	topic:
-	    tapReadPersisted: TAPREAD_PERSISTED_TOPIC
+        bootstrap-servers: localhost:9092
+        topic:
+            tapReadPersisted: TAPREAD_PERSISTED_TOPIC
     security:
-	basic:
-	    enabled: false
+        basic:
+            enabled: false
