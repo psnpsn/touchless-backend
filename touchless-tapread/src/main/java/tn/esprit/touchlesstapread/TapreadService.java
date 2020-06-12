@@ -26,6 +26,7 @@ public class TapreadService {
     @Value("${spring.kafka.topic.tapReadPersisted}")
     private static String TAPREAD_PERSISTED_TOPIC;
     
+    @Autowired
     private Sender sender;
     
     public Flux<Tapread> getAll() {
@@ -38,8 +39,18 @@ public class TapreadService {
     }
     
     public Mono save(final Tapread tapread) {
-        sender.send(TAPREAD_PERSISTED_TOPIC, tapread);
-	return repository.save(tapread);
+        System.out.println(tapread.toString());
+        
+	Mono<Tapread> createdTapread = repository.save(tapread);
+        createdTapread.subscribe(
+            value -> {
+                System.out.println("inside subscribe");
+                System.out.println(value.toString());
+                sender.send("tapReadPersisted", value);
+            }
+        );
+        
+        return createdTapread;
     }
     
     public Mono update(final Tapread tapread) {

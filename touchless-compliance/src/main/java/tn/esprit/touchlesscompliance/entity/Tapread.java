@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.touchlesstapread;
+package tn.esprit.touchlesscompliance.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
