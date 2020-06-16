@@ -28,6 +28,7 @@ public class SiteController {
     @Autowired
     private SiteService service;
     
+    @GetMapping
     public Flux<Site> getAll() {
         return service.getAll();
     }

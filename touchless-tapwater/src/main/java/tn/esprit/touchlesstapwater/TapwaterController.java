@@ -28,6 +28,7 @@ public class TapwaterController {
     @Autowired
     private TapwaterService service;
     
+    @GetMapping
     public Flux<Tapwater> getAll() {
         return service.getAll();
     }

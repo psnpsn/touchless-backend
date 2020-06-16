@@ -28,6 +28,7 @@ public class WristbandController {
     @Autowired
     private WristbandService service;
     
+    @GetMapping
     public Flux<Wristband> getAll() {
         return service.getAll();
     }

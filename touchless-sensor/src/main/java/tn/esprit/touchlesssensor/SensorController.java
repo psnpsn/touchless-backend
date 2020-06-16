@@ -28,6 +28,7 @@ public class SensorController {
     @Autowired
     private SensorService service;
     
+    @GetMapping
     public Flux<Sensor> getAll() {
         return service.getAll();
     }
