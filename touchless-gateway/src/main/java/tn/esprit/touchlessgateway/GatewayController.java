@@ -27,7 +27,7 @@ public class GatewayController {
     
     @Autowired
     private GatewayService service;
-    
+    @GetMapping
     public Flux<Gateway> getAll() {
         return service.getAll();
     }
